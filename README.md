@@ -17,7 +17,6 @@ This module (my contribution to https://github.com/DaveeHorvath/hct_0) provides 
 
 Install
 -------
-## # ORB (custom reference image)
 
 python3 detector.py --ref tattoo_ref.jpg --display
 
