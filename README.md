@@ -37,7 +37,7 @@ Press q to quit (when --display is used).
 Quick Start
 -----------
 
-## # ORB (custom reference image)
+ORB (custom reference image)
 
 python3 detector.py --ref tattoo_ref.jpg --display
 
