@@ -3,9 +3,8 @@ Tattoo/Marker Gate — Visual Factor for 2-Step Override (Raspberry Pi)
 
 Introduction
 -------------
-This is the object detection part of the two-step verificaiton override project. This was a project built over a 36 hour time span for the Junction hackathon. Full project with a demo video can be found here: https://github.com/DaveeHorvath/hct_0.
 
-This module (my contribution to **hct\_0**) provides the **visual first factor** for an override system: it enables “manual control” **only** when a user-specific pattern is detected. The **second factor** (IR remote) is accepted **only after** this gate turns **ON**.
+This module (my contribution to https://github.com/DaveeHorvath/hct_0) provides the **visual first factor** for an override system: it enables “manual control” **only** when a user-specific pattern is detected. The **second factor** (IR remote) is accepted **only after** this gate turns **ON**.
 
 *   Offline, on-device; designed for **Raspberry Pi 4**
     
