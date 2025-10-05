@@ -1,33 +1,4 @@
 #!/usr/bin/env python3
-"""
-Mac + Raspberry Pi webcam marker detector (ORB + optional ArUco)
------------------------------------------------------------------
-
-Purpose
-  • Detect either (A) a custom reference image (e.g., a tattoo/photo/logo) using ORB feature matching
-    OR (B) an ArUco marker if OpenCV-contrib is available.
-  • When a target is confidently detected, overlay and print: "manual control on".
-  • Defaults to using your built‑in webcam on macOS, but runs on Raspberry Pi 4 (USB webcam or Pi Camera via v4l2) with the same code.
-
-Tested Env Targets
-  • Python ≥ 3.8
-  • OpenCV 4.8.1.78 (works with opencv-python). ArUco requires opencv-contrib-python of the SAME version.
-
-Usage examples
-  # 1) Custom image matching (no ArUco required):
-  python3 detector.py --ref ./my_reference.jpg
-
-  # 2) ArUco detection (requires opencv-contrib-python==4.8.1.78):
-  python3 detector.py --aruco 4X4_50
-
-  # 3) Webcam selection and performance options:
-  python3 detector.py --ref ./tattoo.png --camera 0 --width 640 --height 480 --display
-
-Notes
-  • Tattoos deform with skin movement; feature matching is most reliable on (mostly) planar, high‑contrast images.
-  • For maximum reliability, consider printing a small ArUco/AprilTag sticker next to the tattoo and detect that.
-"""
-
 import argparse
 import sys
 import time
@@ -37,9 +8,7 @@ from typing import Optional, Tuple
 import cv2
 import numpy as np
 
-# ----------------------------
-# Utility: optional ArUco
-# ----------------------------
+
 ARUCO_AVAILABLE = False
 ARUCO_DICTIONARIES = {}
 try:
@@ -65,8 +34,8 @@ except Exception:
 
 @dataclass
 class Debounce:
-    required_hits: int = 5  # how many consecutive frames to confirm ON
-    grace_frames: int = 15  # frames to keep ON after last seen
+    required_hits: int = 5  
+    grace_frames: int = 15  
     hits: int = 0
     miss: int = 0
     on: bool = False
@@ -105,7 +74,6 @@ class ORBMatcher:
         if des is None or len(kps) < 10:
             raise ValueError("Not enough features in reference image. Use higher-contrast/texture image.")
         self.target = OrthoTarget(img, kps, des, (w, h))
-        # HAMMING norm for ORB
         self.matcher = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=False)
 
     def detect(self, frame_bgr, draw=True):
@@ -148,9 +116,7 @@ class ArUcoDetector:
             raise ValueError(f"Unknown dictionary '{dict_name}'. Available: {list(ARUCO_DICTIONARIES.keys())}")
         self.dictionary = aruco.getPredefinedDictionary(ARUCO_DICTIONARIES[dict_name])
 
-        # Handle both legacy and new ArUco APIs across OpenCV versions
-        # Legacy (<=4.6): DetectorParameters_create(), aruco.detectMarkers(...)
-        # New (>=4.7):   DetectorParameters(), ArucoDetector(dictionary, parameters).detectMarkers(gray)
+       
         self.legacy_api = hasattr(aruco, 'DetectorParameters_create') and callable(getattr(aruco, 'DetectorParameters_create'))
 
         if self.legacy_api:
