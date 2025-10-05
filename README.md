@@ -18,19 +18,19 @@ Install
 
 python3 detector.py --ref tattoo_ref.jpg --display
 
-# ArUco (requires contrib; pick a dict your build has)
+* ArUco (requires contrib; pick a dict your build has)
 
-## python3 detector.py --aruco 4X4_50 --display
+* *  python3 detector.py --aruco 4X4_50 --display
 
-## # Headless (logs state flips)
+* * *  Headless (logs state flips)
 
-## python3 detector.py --ref tattoo_ref.jpg
+* *  python3 detector.py --ref tattoo_ref.jpg
 
-## The banner + logs show:
+* * The banner + logs show:
 
-## manual control on → visual factor satisfied
+* * manual control on → visual factor satisfied
 
-## manual control off → gated
+* *  manual control off → gated
 
 Press q to quit (when --display is used).
 
@@ -41,19 +41,19 @@ Quick Start
 
 python3 detector.py --ref tattoo_ref.jpg --display
 
-# ArUco (requires contrib; pick a dict your build has)
+* ArUco (requires contrib; pick a dict your build has)
 
-## python3 detector.py --aruco 4X4_50 --display
+* * python3 detector.py --aruco 4X4_50 --display
 
-## # Headless (logs state flips)
+* * * Headless (logs state flips)
 
-## python3 detector.py --ref tattoo_ref.jpg
+* * python3 detector.py --ref tattoo_ref.jpg
 
-## The banner + logs show:
+* * The banner + logs show:
 
-## manual control on → visual factor satisfied
+* * manual control on → visual factor satisfied
 
-## manual control off → gated
+* * manual control off → gated
 
 Press q to quit (when --display is used).
     
@@ -63,17 +63,17 @@ IR Integration (Second Factor)
 
 Gate logic (this module) → ON → accept IR press → perform override.
 
-## Minimal pattern:
+* Minimal pattern:
 
-## if gate_is_on() and ir_button_pressed("OK"):
+* * if gate_is_on() and ir_button_pressed("OK"):
 
-## perform_override()
+* * perform_override()
 
-## Implement gate_is_on() by:
+* * Implement gate_is_on() by:
 
 Parsing this program’s stdout for the latest state, or
 
-## Writing/reading a small flag file/pipe, or
+* Writing/reading a small flag file/pipe, or
 
 Importing the detector and sharing state in-process (advanced).
 
@@ -86,13 +86,7 @@ Tuning Tips
     
 *   Lower --width/--height for higher FPS on the Pi.
     
-
-Run as a Service (optional)
----------------------------
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   # /etc/systemd/system/visual-gate.service  [Unit]  Description=Visual Gate Detector  After=network.target  [Service]  Type=simple  User=pi  WorkingDirectory=/home/pi/hct_0  Environment=PYTHONUNBUFFERED=1  ExecStart=/home/pi/hct_0/.venv/bin/python detector.py --ref /home/pi/tattoo_ref.jpg  Restart=on-failure  [Install]  WantedBy=multi-user.target   `
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   sudo systemctl daemon-reload  sudo systemctl enable --now visual-gate  journalctl -u visual-gate -f   `
+  `
 
 Troubleshooting
 ---------------
