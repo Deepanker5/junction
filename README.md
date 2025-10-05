@@ -14,38 +14,68 @@ This module (my contribution to **hct\_0**) provides the **visual first factor**
 
 Install
 -------
+## # ORB (custom reference image)
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   python3 -m venv .venv && source .venv/bin/activate  # Choose ONE:  pip install numpy opencv-python            # ORB only  pip install numpy opencv-contrib-python    # ORB + ArUco/AprilTag   `
+python3 detector.py --ref tattoo_ref.jpg --display
 
-> AprilTag dictionaries appear only if your contrib build includes them.
+# ArUco (requires contrib; pick a dict your build has)
+
+## python3 detector.py --aruco 4X4_50 --display
+
+## # Headless (logs state flips)
+
+## python3 detector.py --ref tattoo_ref.jpg
+
+## The banner + logs show:
+
+## manual control on → visual factor satisfied
+
+## manual control off → gated
+
+Press q to quit (when --display is used).
 
 Quick Start
 -----------
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   # ORB (reference image of tattoo/pattern)  python3 detector.py --ref tattoo_ref.jpg --display  # ArUco (requires contrib; pick a dict your build has)  python3 detector.py --aruco 4X4_50 --display  # Headless (log state flips)  python3 detector.py --ref tattoo_ref.jpg   `
+## # ORB (custom reference image)
 
-Banner + logs:
+python3 detector.py --ref tattoo_ref.jpg --display
 
-*   manual control on → visual factor satisfied
+# ArUco (requires contrib; pick a dict your build has)
+
+## python3 detector.py --aruco 4X4_50 --display
+
+## # Headless (logs state flips)
+
+## python3 detector.py --ref tattoo_ref.jpg
+
+## The banner + logs show:
+
+## manual control on → visual factor satisfied
+
+## manual control off → gated
+
+Press q to quit (when --display is used).
     
-*   manual control off → gatedPress q to quit when using --display.
-    
-
-CLI Options
------------
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   --camera     Webcam index (0)  --width      Capture width (640)  --height     Capture height (480)  --display         Show preview window  --ref       Reference image for ORB  --aruco     ArUco dict (e.g., 4X4_50, 5X5_100, APRILTAG_16h5*)  --hits       Frames required for ON (5)  --grace      Frames to keep ON after last hit (15)   `
-
-\* Only if present in your OpenCV contrib build.
 
 IR Integration (Second Factor)
 ------------------------------
 
-Gate → **ON** → accept IR press → perform override.
+Gate logic (this module) → ON → accept IR press → perform override.
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   if gate_is_on() and ir_button_pressed("OK"):      perform_override()   `
+## Minimal pattern:
 
-Implement gate\_is\_on() by parsing this program’s stdout, using a small flag file/pipe, or importing the detector (in-process).
+## if gate_is_on() and ir_button_pressed("OK"):
+
+## perform_override()
+
+## Implement gate_is_on() by:
+
+Parsing this program’s stdout for the latest state, or
+
+## Writing/reading a small flag file/pipe, or
+
+Importing the detector and sharing state in-process (advanced).
 
 Tuning Tips
 -----------
